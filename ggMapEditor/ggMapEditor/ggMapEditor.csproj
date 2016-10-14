@@ -88,6 +88,9 @@
     <Compile Include="Models\Base\Object.cs" />
     <Compile Include="Models\Tile.cs" />
     <Compile Include="Models\TileMap.cs" />
+    <Compile Include="Views\Controls\DragableLayout.xaml.cs">
+      <DependentUpon>DragableLayout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\Tile.xaml.cs">
       <DependentUpon>Tile.xaml</DependentUpon>
     </Compile>
@@ -106,6 +109,10 @@
     <Compile Include="Views\Main\TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Controls\DragableLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\Tile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

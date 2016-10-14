@@ -26,10 +26,6 @@ namespace ggMapEditor.Views.Main
         public MainWindow()
         {
             InitializeComponent();
-            holder.MouseLeftButtonDown += OnMouseLeftButtonDown;
-            holder.MouseLeftButtonUp += OnMouseLeftButtonUp;
-            holder.MouseMove += OnMouseMove;
-
         }
 
         private void SaveTileMap_Click(object sender, RoutedEventArgs e)
@@ -63,29 +59,5 @@ namespace ggMapEditor.Views.Main
 
 
         ////////////////////////////////////////////////
-        void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        void OnMouseMove(object sender, MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DataObject dataObject = new DataObject();
-                dataObject.SetData(DataFormats.StringFormat, rect.Fill.ToString());
-                dataObject.SetData("Double", rect.Height);
-                dataObject.SetData("Double", rect.Width);
-                dataObject.SetData("Object", rect);
-
-                DragDrop.DoDragDrop(rect, dataObject, DragDropEffects.Copy | DragDropEffects.Move);
-            }
-        }
     }
 }

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace ggMapEditor.Views.Controls
 {
@@ -15,9 +16,6 @@ namespace ggMapEditor.Views.Controls
         Nullable<Point> lastMousePositionOnTarget;
         Nullable<Point> lastCenterPositionOnTarget;
         Nullable<Point> lastDragedPoint;
-        int scaleValue = 1;
-        int maxScaleValue = 50;
-        int minScaleValue = 1;
 
         /// <summary>
         /// int tileSize;

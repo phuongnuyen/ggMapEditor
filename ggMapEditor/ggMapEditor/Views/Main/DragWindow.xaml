@@ -16,10 +16,7 @@
         <ctrl:ZoomBox x:Name="zoomBox"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch">
-            <Canvas AllowDrop="True"
-                        DragOver="ZoomBox_DragOver"
-                        Drop="ZoomBox_Drop"
-                        Background="Transparent"/>
+            <ctrl:DragableLayout/>
         </ctrl:ZoomBox>
         <Canvas Name="grid"
                 Grid.Column="1">

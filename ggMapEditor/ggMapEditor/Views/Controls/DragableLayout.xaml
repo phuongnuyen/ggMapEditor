@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="ggMapEditor.Views.Controls.DragableLayout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ggMapEditor.Views.Controls">
+    <Canvas AllowDrop="True"
+          DragOver="Layout_DragOver"
+          Drop="Layout_Drop"
+          Background="Transparent"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          x:Name="container">
+    </Canvas>
+</UserControl>

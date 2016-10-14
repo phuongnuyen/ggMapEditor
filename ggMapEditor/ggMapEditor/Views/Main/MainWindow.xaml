@@ -72,17 +72,9 @@
                     <dock:LayoutDocumentPaneGroup>
                         <dock:LayoutDocumentPane>
                             <dock:LayoutDocument Title="Doc1">
-                                <!--<ctrl:ZoomBox>
-                                    <Rectangle Width="100"
-                                               Height="200"
-                                               Fill="Azure"/>
-                                </ctrl:ZoomBox>-->
-                                <Canvas x:Name="holder">
-            <Rectangle x:Name="rect"
-                        Width="100"
-                       Height="200"
-                       Fill="Azure"/>
-        </Canvas>
+        <ctrl:ZoomBox>
+            
+        </ctrl:ZoomBox>
                             </dock:LayoutDocument>
                             <dock:LayoutDocument Title="Doc2">
                                 <TextBox/>
