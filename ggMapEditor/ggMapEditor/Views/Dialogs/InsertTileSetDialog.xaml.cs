@@ -10,18 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Xceed.Wpf.Toolkit;
 
-namespace ggMapEditor
+namespace ggMapEditor.Views.Dialogs
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for InsertTileSet.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class InsertTileSetDialog : Window
     {
-        public MainWindow()
+        public InsertTileSetDialog()
         {
             InitializeComponent();
         }

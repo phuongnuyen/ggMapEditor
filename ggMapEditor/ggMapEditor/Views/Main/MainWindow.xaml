@@ -1,0 +1,144 @@
+﻿<Window x:Class="ggMapEditor.Views.Main.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:dock="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:local="clr-namespace:ggMapEditor"
+        xmlns:ctrl="clr-namespace:ggMapEditor.Views.Controls"
+        mc:Ignorable="d"
+        ResizeMode="CanResize"
+        Title="Map Editor" Width="1080" Height="768">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+ 
+        <Menu x:Name="menu" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <MenuItem Header="File">
+                <Button Content="New"
+                        Click="NewTileMap_Click"/>
+                <Button Content="Open"
+                        Click="OpenTileMap_Click"/>
+                <Button Content="Save"
+                        Click="SaveTileMap_Click"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <Button Content="Cut"/>
+                <Button Content="Copy"/>
+                <Button Content="Paste"/>
+            </MenuItem>
+            <MenuItem Header="View">
+                <Button Content="Show Grid"/>
+                <Button Content="ajhifuerhj"/>
+                <Button Content="ajhifuerhj"/>
+            </MenuItem>
+            <MenuItem Header="Map">
+                <Button Content="New Tileset"/>
+            </MenuItem>
+            <MenuItem Header="Layer">
+                <Button Content="Add Tile"/>
+                <Button Content="Add Layer"/>
+                <Button Content="Add Object"/>
+                <Button Content="Add Image"/>
+                <Button Content="Duplicate Layer"/>
+                <Button Content="Merge Layer"/>
+                <Button Content="Remove Layer"/>
+                <Button Content="Raise Layer"/>
+                <Button Content="Lower Layer"/>
+            </MenuItem>
+            <MenuItem Header="Window">
+                <Button Content=""/>
+                <Button Content="ajhifuerhj"/>
+                <Button Content="ajhifuerhj"/>
+            </MenuItem>
+        </Menu>
+        
+        <StatusBar Grid.Row="3">
+            <StatusBarItem Content="dock 1.3 Sample Project"/>
+        </StatusBar>
+        
+ 
+        <!---->
+        
+        <dock:DockingManager x:Name="dockingManager"
+                             Grid.Row="2">
+            <dock:LayoutRoot>
+                <dock:LayoutPanel Orientation="Horizontal">
+                    <dock:LayoutDocumentPaneGroup>
+                        <dock:LayoutDocumentPane>
+                            <dock:LayoutDocument Title="Doc1">
+                                <!--<ctrl:ZoomBox>
+                                    <Rectangle Width="100"
+                                               Height="200"
+                                               Fill="Azure"/>
+                                </ctrl:ZoomBox>-->
+                                <Canvas x:Name="holder">
+            <Rectangle x:Name="rect"
+                        Width="100"
+                       Height="200"
+                       Fill="Azure"/>
+        </Canvas>
+                            </dock:LayoutDocument>
+                            <dock:LayoutDocument Title="Doc2">
+                                <TextBox/>
+                            </dock:LayoutDocument>
+                        </dock:LayoutDocumentPane>                       
+                    </dock:LayoutDocumentPaneGroup>
+                    <dock:LayoutAnchorablePaneGroup DockWidth="300" Orientation="Vertical">
+                        <dock:LayoutAnchorablePane>
+                            <dock:LayoutAnchorable Title="Mini-map">
+                                <Slider x:Name="sliScale"
+                                        Value="1"
+                                        Minimum="1"
+                                        Maximum="10"/>
+                            </dock:LayoutAnchorable>
+                            <dock:LayoutAnchorable Title="Layers">
+                                <TextBox/>
+                            </dock:LayoutAnchorable>
+                        </dock:LayoutAnchorablePane>
+                        <dock:LayoutAnchorablePane>
+                            <dock:LayoutAnchorable Title="Objects">
+                                <TextBox/>
+                            </dock:LayoutAnchorable>
+                            <dock:LayoutAnchorable Title="Properties">
+                                <TextBox/>
+                            </dock:LayoutAnchorable>
+                        </dock:LayoutAnchorablePane>
+                    </dock:LayoutAnchorablePaneGroup>
+                </dock:LayoutPanel>
+                <dock:LayoutRoot.LeftSide>
+                    <dock:LayoutAnchorSide>
+                        <dock:LayoutAnchorGroup>
+                            <dock:LayoutAnchorable Title="Tilesets"
+                                                   AutoHideWidth="300">
+                                <TextBox/>
+                            </dock:LayoutAnchorable>
+                        </dock:LayoutAnchorGroup>
+                    </dock:LayoutAnchorSide>
+                </dock:LayoutRoot.LeftSide>
+            </dock:LayoutRoot>
+        </dock:DockingManager>
+        <ToolBarTray Grid.Row="1">
+            <ToolBar>
+                <Button Content="New"/>
+                <Button Content="Open"/>
+                <Button Content="Save"/>
+                <!--<Button Content="Export"/>-->
+            </ToolBar>
+            <ToolBar>
+                <Button Content="Cut"/>
+                <Button Content="Copy"/>
+                <Button Content="Parse"/>
+            </ToolBar>
+            <ToolBar>
+                <Button Content="Undo"/>
+                <Button Content="Redo"/>
+            </ToolBar>
+        </ToolBarTray>
+    </Grid>
+</Window>
