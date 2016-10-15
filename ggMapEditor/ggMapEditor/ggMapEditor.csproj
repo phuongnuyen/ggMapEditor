@@ -100,14 +100,11 @@
     <Compile Include="Views\Dialogs\HelpDialog.xaml.cs">
       <DependentUpon>HelpDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\InsertTileSetDialog.xaml.cs">
-      <DependentUpon>InsertTileSetDialog.xaml</DependentUpon>
+    <Compile Include="Views\Dialogs\AddTileSetDialog.xaml.cs">
+      <DependentUpon>AddTileSetDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\NewTileMapDialog.xaml.cs">
       <DependentUpon>NewTileMapDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\TestWindow.xaml.cs">
-      <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\Controls\DragableLayout.xaml">
       <SubType>Designer</SubType>
@@ -118,6 +115,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\ZoomBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Fragments\LayerBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Fragments\TilesetBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,6 +139,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Base.cs" />
+    <Compile Include="Views\Fragments\LayerBox.xaml.cs">
+      <DependentUpon>LayerBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Fragments\TilesetBox.xaml.cs">
+      <DependentUpon>TilesetBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Main\DragWindow.xaml.cs">
       <DependentUpon>DragWindow.xaml</DependentUpon>
     </Compile>
@@ -145,15 +156,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialogs\InsertTileSetDialog.xaml">
+    <Page Include="Views\Dialogs\AddTileSetDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\NewTileMapDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\TestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

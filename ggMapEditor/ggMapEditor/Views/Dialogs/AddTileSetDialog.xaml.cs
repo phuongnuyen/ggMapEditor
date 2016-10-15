@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ggMapEditor.Views.Main
+namespace ggMapEditor.Views.Dialogs
 {
     /// <summary>
-    /// Interaction logic for TestWindow.xaml
+    /// Interaction logic for InsertTileSet.xaml
     /// </summary>
-    public partial class TestWindow : Window
+    public partial class AddTileSetDialog : Window
     {
-        public TestWindow()
+        public AddTileSetDialog()
         {
             InitializeComponent();
         }

@@ -91,23 +91,23 @@ namespace ggMapEditor.Views.Controls
 
                 if (panel != null && element != null)
                 {
-                    Panel parent = (Panel)VisualTreeHelper.GetParent(element);
+                    DependencyObject parent = VisualTreeHelper.GetParent(element);
                     if (parent != null)
                     {
-                        if (e.KeyStates == DragDropKeyStates.ControlKey && e.AllowedEffects.HasFlag(DragDropEffects.Copy))
+                        if (e.AllowedEffects.HasFlag(DragDropEffects.Copy))
                         {
                             Views.Controls.Tile tile = new Views.Controls.Tile(element as Controls.Tile);
                             panel.Children.Add(tile);
                             e.Effects = DragDropEffects.Copy;
 
                         }
-                        else
-                            if (e.AllowedEffects.HasFlag(DragDropEffects.Move))
-                        {
-                            parent.Children.Remove(element);
-                            panel.Children.Add(element);
-                            e.Effects = DragDropEffects.Move;
-                        }
+                        //else
+                        //    if (e.AllowedEffects.HasFlag(DragDropEffects.Move))
+                        //{
+                        //    //parent.Children.Remove(element);
+                        //    panel.Children.Add(element);
+                        //    e.Effects = DragDropEffects.Move;
+                        //}
                     }
                 }
             }

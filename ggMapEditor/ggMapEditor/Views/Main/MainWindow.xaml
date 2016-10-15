@@ -7,6 +7,7 @@
         xmlns:dock="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:local="clr-namespace:ggMapEditor"
         xmlns:ctrl="clr-namespace:ggMapEditor.Views.Controls"
+        xmlns:frag="clr-namespace:ggMapEditor.Views.Fragments"
         mc:Ignorable="d"
         ResizeMode="CanResize"
         Title="Map Editor" Width="1080" Height="768">
@@ -72,17 +73,21 @@
                     <dock:LayoutDocumentPaneGroup>
                         <dock:LayoutDocumentPane>
                             <dock:LayoutDocument Title="Doc1">
-        <ctrl:ZoomBox>
-            
-        </ctrl:ZoomBox>
+                                <ctrl:ZoomBox>
+                                    <ctrl:DragableLayout/>
+                                </ctrl:ZoomBox>
                             </dock:LayoutDocument>
                             <dock:LayoutDocument Title="Doc2">
                                 <TextBox/>
                             </dock:LayoutDocument>
                         </dock:LayoutDocumentPane>                       
                     </dock:LayoutDocumentPaneGroup>
-                    <dock:LayoutAnchorablePaneGroup DockWidth="300" Orientation="Vertical">
+                    <dock:LayoutAnchorablePaneGroup DockWidth="300"
+                                                    Orientation="Vertical">
                         <dock:LayoutAnchorablePane>
+                            <dock:LayoutAnchorable Title="Tilesets">
+                                <frag:TilesetBox/>
+                            </dock:LayoutAnchorable>
                             <dock:LayoutAnchorable Title="Mini-map">
                                 <Slider x:Name="sliScale"
                                         Value="1"
@@ -90,10 +95,10 @@
                                         Maximum="10"/>
                             </dock:LayoutAnchorable>
                             <dock:LayoutAnchorable Title="Layers">
-                                <TextBox/>
+                                <frag:LayerBox/>
                             </dock:LayoutAnchorable>
                         </dock:LayoutAnchorablePane>
-                        <dock:LayoutAnchorablePane>
+                        <dock:LayoutAnchorablePane >
                             <dock:LayoutAnchorable Title="Objects">
                                 <TextBox/>
                             </dock:LayoutAnchorable>
@@ -108,7 +113,7 @@
                         <dock:LayoutAnchorGroup>
                             <dock:LayoutAnchorable Title="Tilesets"
                                                    AutoHideWidth="300">
-                                <TextBox/>
+                                <frag:TilesetBox/>
                             </dock:LayoutAnchorable>
                         </dock:LayoutAnchorGroup>
                     </dock:LayoutAnchorSide>

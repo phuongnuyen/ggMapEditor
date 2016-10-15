@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ggMapEditor.Views.Dialogs
+namespace ggMapEditor.Views.Fragments
 {
     /// <summary>
-    /// Interaction logic for InsertTileSet.xaml
+    /// Interaction logic for LayerBox.xaml
     /// </summary>
-    public partial class InsertTileSetDialog : Window
+    public partial class LayerBox : UserControl
     {
-        public InsertTileSetDialog()
+        public LayerBox()
         {
             InitializeComponent();
         }
