@@ -22,10 +22,6 @@ namespace ggMapEditor.Views.Controls
     [ContentProperty(nameof(Children))]
     public partial class DragableLayout : UserControl
     {
-        UIElement source = null;
-        Point objectPos;
-        Point canvasPos;
-
         public static readonly DependencyPropertyKey ChildrenProperty = DependencyProperty.RegisterReadOnly
         (
             nameof(Children),
@@ -44,49 +40,22 @@ namespace ggMapEditor.Views.Controls
         {
             InitializeComponent();
         }
-        private void Object_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            source = sender as UIElement;
-            Mouse.Capture(source);
-            objectPos.X = Canvas.GetLeft(source);
-            objectPos.Y = Canvas.GetTop(source);
-            canvasPos = e.GetPosition(container);
-        }
 
-        private void Object_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                var curPos = e.GetPosition(container);
-                objectPos += curPos - canvasPos;
-                Canvas.SetLeft(source, objectPos.X);
-                Canvas.SetTop(source, objectPos.Y);
-                canvasPos = curPos;
-            }
-        }
-
-        private void Object_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            container.ReleaseMouseCapture();
-            Mouse.Capture(null);
-        }
 
         private void Layout_DragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent("Object"))
-            {
-                if (e.KeyStates == DragDropKeyStates.ControlKey)
-                    e.Effects = DragDropEffects.Copy;
-                else
-                    e.Effects = DragDropEffects.Move;
-            }
+                e.Effects = DragDropEffects.Copy;
+            else
+                e.Effects = DragDropEffects.None;
+
         }
 
         private void Layout_Drop(object sender, DragEventArgs e)
         {
             if (e.Handled == false)
             {
-                Panel panel = (Panel)sender;
+                Canvas panel = (Canvas)sender;
                 UIElement element = (UIElement)e.Data.GetData("Object");
 
                 if (panel != null && element != null)
@@ -98,18 +67,17 @@ namespace ggMapEditor.Views.Controls
                         {
                             Views.Controls.Tile tile = new Views.Controls.Tile(element as Controls.Tile);
                             panel.Children.Add(tile);
+
+                            var mousePos = e.GetPosition(panel);
+                            Canvas.SetTop(tile, mousePos.Y - tile.TileSize / 2);
+                            Canvas.SetLeft(tile, mousePos.X - tile.TileSize / 2);
                             e.Effects = DragDropEffects.Copy;
 
                         }
-                        //else
-                        //    if (e.AllowedEffects.HasFlag(DragDropEffects.Move))
-                        //{
-                        //    //parent.Children.Remove(element);
-                        //    panel.Children.Add(element);
-                        //    e.Effects = DragDropEffects.Move;
-                        //}
                     }
                 }
+                container.ReleaseMouseCapture();
+                Mouse.Capture(null);
             }
         }
     }
