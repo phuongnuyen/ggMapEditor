@@ -91,6 +91,9 @@
     <Compile Include="Views\Controls\DragableLayout.xaml.cs">
       <DependentUpon>DragableLayout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\MatrixGrid.xaml.cs">
+      <DependentUpon>MatrixGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\Tile.xaml.cs">
       <DependentUpon>Tile.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,10 @@
       <DependentUpon>NewTileMapDialog.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\Controls\DragableLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\MatrixGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

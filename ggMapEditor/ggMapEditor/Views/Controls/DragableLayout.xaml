@@ -6,12 +6,36 @@
              xmlns:local="clr-namespace:ggMapEditor.Views.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Canvas AllowDrop="True"
+    <Grid AllowDrop="True"
           DragOver="Layout_DragOver"
           Drop="Layout_Drop"
           Background="Transparent"
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch"
           x:Name="container">
-    </Canvas>
+        <!--<Grid.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <EventTrigger.Actions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </Grid.Triggers>-->
+        <Grid.Style>
+            <Style TargetType="{x:Type Grid}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="Red"/>
+                        <Setter Property="Opacity" Value="0.3"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="False">
+                        <Setter Property="Background" Value="Transparent"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+    </Grid>
 </UserControl>

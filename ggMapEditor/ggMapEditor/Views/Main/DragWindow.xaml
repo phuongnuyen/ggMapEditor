@@ -16,12 +16,20 @@
         <ctrl:ZoomBox x:Name="zoomBox"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch">
-            <ctrl:DragableLayout/>
+            <ctrl:MatrixGrid HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             RowCount="10"
+                             ColumnCount="20"
+                             TileSize="32"/>
         </ctrl:ZoomBox>
-        <Canvas Name="grid"
+        <Grid Name="grid"
                 Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <ctrl:Tile TileSize="32"
                        TileSource="pack://application:,,,/rampo.jpg"/>
-        </Canvas>
+        </Grid>
     </Grid>
 </Window>
