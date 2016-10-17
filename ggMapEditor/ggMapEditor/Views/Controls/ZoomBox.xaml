@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ggMapEditor.Views.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
+    <!--<UserControl.Resources>
         <DrawingBrush x:Key="Offset" 
                       TileMode="Tile"
                       Viewport="0,0,32,32"
@@ -14,7 +14,7 @@
             <DrawingBrush.Drawing>
                 <GeometryDrawing>
                     <GeometryDrawing.Geometry>
-                        <!--<RectangleGeometry Rect="0,0,32,32"/>-->
+                        --><!--<RectangleGeometry Rect="0,0,32,32"/>--><!--
                         <GeometryGroup>
                             <LineGeometry StartPoint="0,0" EndPoint="0,100"/>
                             <LineGeometry StartPoint="0,100" EndPoint="100,100"/>
@@ -30,7 +30,7 @@
                 </GeometryDrawing>
             </DrawingBrush.Drawing>
         </DrawingBrush>
-    </UserControl.Resources>
+    </UserControl.Resources>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -48,7 +48,6 @@
                       VerticalScrollBarVisibility="Hidden"
                       Background="DarkGray">
             <Grid Name="container"
-                  Background="{StaticResource Offset}"
                   RenderTransformOrigin="0.5, 0.5"
                   Width="{Binding ElementName=scrollViewer, Path=ActualWidth}"
                   Height="{Binding ElementName=scrollViewer, Path=ActualHeight}">

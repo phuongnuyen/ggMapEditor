@@ -12,13 +12,10 @@ namespace ggMapEditor.Views.Controls
     /// Interaction logic for Tile.xaml
     /// </summary>
     public partial class Tile : UserControl
-    {
-        #region private members
-        //private Brush preBrush = null;
-        #endregion
+    { 
 
         public static readonly DependencyProperty TileSourceProperty
-            = DependencyProperty.Register("TileSource", typeof(Uri), typeof(Tile),
+            = DependencyProperty.Register("TileSource", typeof(ImageSource), typeof(Tile),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTileSourceChanged)));
         public static readonly DependencyProperty TileSizeProperty
             = DependencyProperty.Register("TileSize", typeof(double), typeof(Tile),
@@ -38,9 +35,9 @@ namespace ggMapEditor.Views.Controls
         #endregion
 
         #region properties
-        public Uri TileSource
+        public ImageSource TileSource
         {
-            get { return (Uri)GetValue(TileSourceProperty); }
+            get { return (ImageSource)GetValue(TileSourceProperty); }
             set { SetValue(TileSourceProperty, value);
             }
         }
@@ -58,7 +55,7 @@ namespace ggMapEditor.Views.Controls
         private static void OnTileSourceChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             Tile tile = (Tile)sender;
-            tile.tileImg.Source = new BitmapImage((Uri)e.NewValue);
+            tile.tileImg.Source = (ImageSource)e.NewValue;//new BitmapImage((Uri)e.NewValue);
         }
         private static void OnTileSizeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
@@ -74,7 +71,7 @@ namespace ggMapEditor.Views.Controls
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 DataObject data = new DataObject();
-                data.SetData(DataFormats.Bitmap, new BitmapImage(this.TileSource));
+                data.SetData(DataFormats.Bitmap, TileSource);
                 data.SetData("Double", this.TileSize);
                 data.SetData("Object", this);
 

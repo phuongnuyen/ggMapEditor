@@ -84,10 +84,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Helpers\DialogCloser.cs" />
     <Compile Include="Models\Layer.cs" />
     <Compile Include="Models\Base\Object.cs" />
     <Compile Include="Models\Tile.cs" />
     <Compile Include="Models\TileMap.cs" />
+    <Compile Include="Models\Tileset.cs" />
+    <Compile Include="ViewModels\Base\BaseViewModel.cs" />
+    <Compile Include="ViewModels\TilesetBoxViewModel.cs" />
     <Compile Include="Views\Controls\DragableLayout.xaml.cs">
       <DependentUpon>DragableLayout.xaml</DependentUpon>
     </Compile>
@@ -103,8 +108,8 @@
     <Compile Include="Views\Dialogs\HelpDialog.xaml.cs">
       <DependentUpon>HelpDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\AddTileSetDialog.xaml.cs">
-      <DependentUpon>AddTileSetDialog.xaml</DependentUpon>
+    <Compile Include="Views\Dialogs\AddTilesetDialog.xaml.cs">
+      <DependentUpon>AddTilesetDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\NewTileMapDialog.xaml.cs">
       <DependentUpon>NewTileMapDialog.xaml</DependentUpon>
@@ -163,7 +168,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialogs\AddTileSetDialog.xaml">
+    <Page Include="Views\Dialogs\AddTilesetDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,10 +205,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="rampo.jpg" />
   </ItemGroup>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing;
 using Xceed.Wpf.Toolkit;
 using Xceed.Wpf.AvalonDock;
 using Microsoft.Win32;
@@ -23,6 +24,7 @@ namespace ggMapEditor.Views.Main
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string fileName;
         public MainWindow()
         {
             InitializeComponent();
@@ -46,7 +48,6 @@ namespace ggMapEditor.Views.Main
             fileDialog.Filter = "Tile map files (*tmx)|*.tmx";
             fileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            string fileName;
             if (fileDialog.ShowDialog() == true)
                 fileName = fileDialog.FileName + ".tmx";
         }
@@ -55,6 +56,13 @@ namespace ggMapEditor.Views.Main
         {
             Dialogs.NewTileMapDialog fileDialog = new Dialogs.NewTileMapDialog();
             fileDialog.ShowDialog();
+        }
+
+        private void NewTileSet_Click(object sender, RoutedEventArgs e)
+        {
+            Dialogs.AddTilesetDialog fileDialog = new Dialogs.AddTilesetDialog();
+            fileDialog.ShowDialog();
+            tilesetBox.Tiles = fileDialog.GetTiles();
         }
 
 

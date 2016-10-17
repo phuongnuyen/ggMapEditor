@@ -39,7 +39,8 @@
                 <Button Content="ajhifuerhj"/>
             </MenuItem>
             <MenuItem Header="Map">
-                <Button Content="New Tileset"/>
+                <Button Content="New Tileset"
+                        Click="NewTileSet_Click"/>
             </MenuItem>
             <MenuItem Header="Layer">
                 <Button Content="Add Tile"/>
@@ -74,7 +75,7 @@
                         <dock:LayoutDocumentPane>
                             <dock:LayoutDocument Title="Doc1">
                                 <ctrl:ZoomBox>
-                                    <ctrl:DragableLayout/>
+                                    <ctrl:MatrixGrid/>
                                 </ctrl:ZoomBox>
                             </dock:LayoutDocument>
                             <dock:LayoutDocument Title="Doc2">
@@ -86,7 +87,7 @@
                                                     Orientation="Vertical">
                         <dock:LayoutAnchorablePane>
                             <dock:LayoutAnchorable Title="Tilesets">
-                                <frag:TilesetBox/>
+                                <frag:TilesetBox x:Name="tilesetBox"/>
                             </dock:LayoutAnchorable>
                             <dock:LayoutAnchorable Title="Mini-map">
                                 <Slider x:Name="sliScale"

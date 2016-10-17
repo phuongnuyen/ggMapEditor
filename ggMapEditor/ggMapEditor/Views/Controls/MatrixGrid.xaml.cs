@@ -34,6 +34,7 @@ namespace ggMapEditor.Views.Controls
         public MatrixGrid()
         {
             InitializeComponent();
+            InitGrid(); //To Test
         }
         #endregion
 
@@ -75,6 +76,11 @@ namespace ggMapEditor.Views.Controls
 
         private void InitGrid()
         {
+            TileSize = 30;
+            RowCount = 30;
+            ColumnCount = 10;
+            ///====================
+
             if (TileSize == 0 || RowCount == 0 | ColumnCount == 0)
                 return;
 
