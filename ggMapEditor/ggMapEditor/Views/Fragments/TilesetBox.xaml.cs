@@ -53,50 +53,5 @@ namespace ggMapEditor.Views.Fragments
             Tiles.Add(tile);
             //listBox.ItemsSource = Tiles;
         }
-
-        //public void SplitImage()
-        //{
-        //    if (tileset != null)
-        //    {
-        //        BitmapImage bitmapImage;
-        //        Bitmap image;
-        //        try
-        //        {
-        //            bitmapImage = new BitmapImage(tileset.imageUri);
-        //            using (MemoryStream outStream = new MemoryStream())
-        //            {
-        //                BitmapEncoder enc = new BmpBitmapEncoder();
-        //                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
-        //                enc.Save(outStream);
-        //                image = new System.Drawing.Bitmap(outStream);
-        //            };
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            System.Windows.MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK);
-        //            return;
-        //        }
-
-        //        for (int i = 1; i < image.Height; i += tileset.tileSize)
-        //            for (int k = 1; k < image.Width; k += tileset.tileSize)
-        //            {
-        //                System.Drawing.Rectangle rect = new System.Drawing.Rectangle(i, k, i + tileset.tileSize, k + tileset.tileSize);
-        //                //System.Drawing.Imaging.PixelFormat pixelFormat = image.PixelFormat;
-        //                Bitmap bitmap = CropImage(image, rect);
-        //                list.Add(bitmap);
-        //            }
-        //        listBox.ItemsSource = list;
-        //    }
-        //}
-
-        //Bitmap CropImage(System.Drawing.Image imageSource, Rectangle rect)
-        //{
-        //    Bitmap image = new Bitmap(32, 32);
-        //    using (Graphics gp = Graphics.FromImage(image))
-        //    {
-        //        gp.DrawImage(imageSource, new System.Drawing.Rectangle(0, 0, 32, 32), rect, GraphicsUnit.Pixel);
-        //    }
-        //    return image;
-        //}
     }
 }

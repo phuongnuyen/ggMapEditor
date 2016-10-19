@@ -8,16 +8,20 @@ namespace ggMapEditor.Models
 {
     public class Tile
     {
-        public int id { get; set; }
-        public Point position { get; set; }
-        public Uri imageSource { get; set; }
-        public double size { get; set; }
+        public static int id { get; set; }
+        public ulong position { get; set; }
+        public ImageSource image { get; set; }
+        public int size { get; set; }
 
-        public Tile(){ }
-
-        public Tile(Uri imageSource, double size)
+        public Tile()
         {
-            this.imageSource = imageSource;
+            id++;
+            size = 32;
+        }
+
+        public Tile(ImageSource image, int size)
+        {
+            this.image = image;
             this.size = size;
         }
     }

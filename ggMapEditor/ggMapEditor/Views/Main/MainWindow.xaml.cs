@@ -1,21 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Drawing;
-using Xceed.Wpf.Toolkit;
-using Xceed.Wpf.AvalonDock;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace ggMapEditor.Views.Main
 {
@@ -25,6 +11,7 @@ namespace ggMapEditor.Views.Main
     public partial class MainWindow : Window
     {
         private string fileName;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,12 +20,17 @@ namespace ggMapEditor.Views.Main
         private void SaveTileMap_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.Filter = "Tile map files (*tmx)|*.tmx";
+            fileDialog.Filter = "Tile map files|*json";
             fileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            string fileName;
+            fileDialog.FileName = "untitled.json";
             if (fileDialog.ShowDialog() == true)
-                fileName = fileDialog.FileName + ".tmx";
+            {
+                string json = JsonConvert.SerializeObject(layerBox.GetListLayer());
+                System.IO.File.WriteAllText(fileDialog.FileName, json);
+            }
+
+                
         }
 
         private void OpenTileMap_Click(object sender, RoutedEventArgs e)

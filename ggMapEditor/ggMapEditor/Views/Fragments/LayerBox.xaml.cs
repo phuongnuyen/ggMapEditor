@@ -1,28 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ggMapEditor.Views.Fragments
 {
-    /// <summary>
-    /// Interaction logic for LayerBox.xaml
-    /// </summary>
     public partial class LayerBox : UserControl
     {
+        private ViewModels.LayerBoxViewModel vm;
         public LayerBox()
         {
             InitializeComponent();
+            vm = new ViewModels.LayerBoxViewModel();
+            root.DataContext = vm;
+        }
+
+        public ObservableCollection<Models.Layer> GetListLayer()
+        {
+            return vm.Layers;
         }
     }
 }

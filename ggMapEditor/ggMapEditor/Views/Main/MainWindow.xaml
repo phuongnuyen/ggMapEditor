@@ -96,7 +96,7 @@
                                         Maximum="10"/>
                             </dock:LayoutAnchorable>
                             <dock:LayoutAnchorable Title="Layers">
-                                <frag:LayerBox/>
+                                <frag:LayerBox x:Name="layerBox"/>
                             </dock:LayoutAnchorable>
                         </dock:LayoutAnchorablePane>
                         <dock:LayoutAnchorablePane >

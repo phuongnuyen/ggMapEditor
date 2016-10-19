@@ -17,10 +17,9 @@ using Microsoft.Win32;
 
 namespace ggMapEditor.ViewModels
 {
-    class TilesetBoxViewModel : Base.BaseViewModel
+    class AddTilesetViewModel : Base.BaseViewModel
     {
         private Models.Tileset tileset;
-        //public ObservableCollection<ImageSource> tiles { get; private set; }
         public ObservableCollection<Views.Controls.Tile> Tiles
         {
             get { return tileset.tiles; }
@@ -30,7 +29,7 @@ namespace ggMapEditor.ViewModels
                 RaisePropertyChanged("Tiles");
             }
         }
-        public TilesetBoxViewModel()
+        public AddTilesetViewModel()
         {
 
             tileset = new Models.Tileset();
@@ -126,11 +125,7 @@ namespace ggMapEditor.ViewModels
             Tiles = new ObservableCollection<Views.Controls.Tile>();
             if (Tiles != null)
             {
-                BitmapImage source = new BitmapImage();
-                source.BeginInit();
-                source.UriSource = ImageUri;
-                source.CacheOption = BitmapCacheOption.OnLoad;
-                source.EndInit();
+                BitmapImage source = new BitmapImage(ImageUri);
 
                 for (int i = 0; i < 200; i += tileset.tileSize + 1)
                     for (int k = 0; k < 200; k += tileset.tileSize + 1)

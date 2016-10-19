@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -85,6 +89,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="ConstantEnum.cs" />
     <Compile Include="Helpers\DialogCloser.cs" />
     <Compile Include="Models\Layer.cs" />
     <Compile Include="Models\Base\Object.cs" />
@@ -92,7 +97,9 @@
     <Compile Include="Models\TileMap.cs" />
     <Compile Include="Models\Tileset.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModels\TilesetBoxViewModel.cs" />
+    <Compile Include="ViewModels\AddTilesetViewModel.cs" />
+    <Compile Include="ViewModels\LayerBoxViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\Controls\DragableLayout.xaml.cs">
       <DependentUpon>DragableLayout.xaml</DependentUpon>
     </Compile>
