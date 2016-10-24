@@ -14,26 +14,21 @@ using System.Windows.Media.Imaging;
 using ggMapEditor.Commands;
 using ggMapEditor.Models;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace ggMapEditor.ViewModels
 {
     class AddTilesetViewModel : Base.BaseViewModel
     {
         private Models.Tileset tileset;
-        public ObservableCollection<Views.Controls.Tile> Tiles
-        {
-            get { return tileset.tiles; }
-            set
-            {
-                tileset.tiles = value;
-                RaisePropertyChanged("Tiles");
-            }
-        }
-        public AddTilesetViewModel()
-        {
+        private string folderPath;
 
+        public AddTilesetViewModel(string folderPath)
+        {
             tileset = new Models.Tileset();
-
+            TileSize = 32;
+            Name = "Tileset";
+            this.folderPath = folderPath;
             OpenFileCommand = new RelayCommand(BrowsFile);
             OkCommand = new RelayCommand(ButtonOk);
             CancelCommand = new RelayCommand(ButtonCancel);
@@ -70,14 +65,16 @@ namespace ggMapEditor.ViewModels
         }
         public int TileSize
         {
-            get { return tileset.tileSize; }
+            get { return tileset.tileWidth; }
             set
             {
-                tileset.tileSize = value;
+                tileset.height = value;
+                tileset.width = value;
+
                 if (value == 0)
                 {
                     MessageBox.Show("Invalid value. Set default tile size is 32.");
-                    tileset.tileSize = 32;
+                    tileset.height = tileset.width = 32;
                     RaisePropertyChanged("TileSize");
                 }
             }
@@ -91,11 +88,13 @@ namespace ggMapEditor.ViewModels
 
         void ButtonOk(object parameter)
         {
-            CropImage();
+            RenderTileset();
             CloseWindow();
         }
         void ButtonCancel(object parameter)
         {
+            //tileset.tileList.Clear();
+            //tileset = null;
             CloseWindow();
         }
         void BrowsFile(object parameter)
@@ -109,7 +108,6 @@ namespace ggMapEditor.ViewModels
                 try
                 {
                     ImageUri = new Uri(fileDialog.FileName, UriKind.RelativeOrAbsolute);
-                    Name = fileDialog.FileName;
                 }
                 catch (Exception ex)
                 {
@@ -120,25 +118,36 @@ namespace ggMapEditor.ViewModels
         #endregion
 
         #region Other functions
-        private void CropImage()
+        public Models.Tileset GetTileset()
         {
-            Tiles = new ObservableCollection<Views.Controls.Tile>();
-            if (Tiles != null)
+            return tileset;
+        }
+
+        private void RenderTileset()
+        {
+            BitmapImage img = new BitmapImage(tileset.imageUri);
+
+            List<BitmapSource> bmCells = BitmapImageExtensions.CropImage(img, TileSize, TileSize);
+         
+            for (int i = 0; i < bmCells.Count; i++)
             {
-                BitmapImage source = new BitmapImage(ImageUri);
-
-                for (int i = 0; i < 200; i += tileset.tileSize + 1)
-                    for (int k = 0; k < 200; k += tileset.tileSize + 1)
-                    {
-                        Int32Rect rect = new Int32Rect(k, i, tileset.tileSize, tileset.tileSize);
-                        CroppedBitmap imageSource = new CroppedBitmap(source, rect);
-
-                        Views.Controls.Tile tile = new Views.Controls.Tile();
-                        tile.TileSource = imageSource;
-                        tile.TileSize = tileset.tileSize;
-                        Tiles.Add(tile);
-                    }
+                Models.TilesetCell tile = new TilesetCell();
+                tile.x = i* TileSize;
+                tile.y = 0;
+                tileset.tileList.Add(tile);
             }
+
+            var newImgSource = bmCells.MergeImage();
+            tileset.width = newImgSource.PixelWidth;
+            tileset.height = newImgSource.PixelHeight;
+
+            string imgPath = folderPath + "\\" + tileset.name + ".png";
+            newImgSource.SaveImage(imgPath);
+            tileset.imageUri = new Uri(imgPath, UriKind.RelativeOrAbsolute);
+
+            string jsonFilePath = folderPath + "\\" + tileset.name + ".json";
+            string json = JsonConvert.SerializeObject(tileset);
+            System.IO.File.WriteAllText(jsonFilePath, json);    
         }
         #endregion
     }

@@ -88,18 +88,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BitmapImage\BitmapImageExtensions.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="ConstantEnum.cs" />
     <Compile Include="Helpers\DialogCloser.cs" />
+    <Compile Include="Helpers\StaticHelpers.cs" />
+    <Compile Include="Json\FileIO.cs" />
+    <Compile Include="Models\Combine.cs" />
     <Compile Include="Models\Layer.cs" />
     <Compile Include="Models\Base\Object.cs" />
     <Compile Include="Models\Tile.cs" />
     <Compile Include="Models\TileMap.cs" />
     <Compile Include="Models\Tileset.cs" />
+    <Compile Include="Models\TilesetCell.cs" />
+    <Compile Include="QuadTree\QuadTree.cs" />
+    <Compile Include="QuadTree\QuadNode.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\AddTilesetViewModel.cs" />
     <Compile Include="ViewModels\LayerBoxViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\NewTileMapViewModel.cs" />
+    <Compile Include="ViewModels\TileViewModel.cs" />
     <Compile Include="Views\Controls\DragableLayout.xaml.cs">
       <DependentUpon>DragableLayout.xaml</DependentUpon>
     </Compile>
@@ -120,6 +129,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\NewTileMapDialog.xaml.cs">
       <DependentUpon>NewTileMapDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\RootWindow.xaml.cs">
+      <DependentUpon>RootWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\Controls\DragableLayout.xaml">
       <SubType>Designer</SubType>
@@ -183,6 +195,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Main\RootWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -212,7 +228,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="2.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="rampo.jpg" />
   </ItemGroup>

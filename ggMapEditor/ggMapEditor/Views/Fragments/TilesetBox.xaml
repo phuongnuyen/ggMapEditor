@@ -13,48 +13,25 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <TabControl x:Name="tabControl">
-            <TabItem Header="TabItem">
+            <TabItem Header="{Binding TilesetName}">
                 <ListBox x:Name="listBox"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         ItemsSource="{Binding Tiles, Mode=OneWay}">
+                         ItemsSource="{Binding CtrTiles}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal"/>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
-                    <!--<ListBoxItem>
-                        <ctrl:Tile TileSource="pack://application:,,,/rampo.jpg" TileSize="32"/>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <ctrl:Tile TileSource="pack://application:,,,/rampo.jpg" TileSize="32"/>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <ctrl:Tile TileSource="pack://application:,,,/rampo.jpg" TileSize="32"/>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <ctrl:Tile TileSource="pack://application:,,,/rampo.jpg" TileSize="32"/>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <ctrl:Tile TileSource="pack://application:,,,/rampo.jpg" TileSize="32"/>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <ctrl:Tile TileSource="pack://application:,,,/rampo.jpg" TileSize="32"/>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <ctrl:Tile TileSource="pack://application:,,,/rampo.jpg" TileSize="32"/>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <ctrl:Tile TileSource="pack://application:,,,/rampo.jpg" TileSize="32"/>
-                    </ListBoxItem>-->
                     <!--<ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Image Width="32" Height="32" Source="{Binding}"/>
+                            <ctrl:Tile TileSource="{Binding}"
+                                       TileSize="{Binding TileSize}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>-->
                 </ListBox>
             </TabItem>
         </TabControl>
-        <ToolBar Grid.Row="1">
+        <ToolBar Grid.Row="2">
             <Button Content="Remove"/>
         </ToolBar>
 

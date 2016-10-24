@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ggMapEditor.Views.Controls
 {
@@ -20,6 +12,9 @@ namespace ggMapEditor.Views.Controls
     /// </summary>
     public partial class MatrixGrid : UserControl
     {
+        private ObservableCollection<DragableLayout> listCellHasChild;
+
+
         public static readonly DependencyProperty RownCountProperty
             = DependencyProperty.Register("RowCount", typeof(int), typeof(MatrixGrid),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnRowCountChanged)));
@@ -27,14 +22,15 @@ namespace ggMapEditor.Views.Controls
             = DependencyProperty.Register("ColumnCount", typeof(int), typeof(MatrixGrid),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnColumnCountChanged)));
         public static readonly DependencyProperty TileSizeProperty
-            = DependencyProperty.Register("TileSize", typeof(double), typeof(MatrixGrid),
+            = DependencyProperty.Register("TileSize", typeof(int), typeof(MatrixGrid),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTileSizeChanged)));
 
         #region Constructors
         public MatrixGrid()
         {
             InitializeComponent();
-            InitGrid(); //To Test
+            DataContext = this;
+            listCellHasChild = new ObservableCollection<DragableLayout>();
         }
         #endregion
 
@@ -47,12 +43,16 @@ namespace ggMapEditor.Views.Controls
         public int ColumnCount
         {
             get { return (int)GetValue(ColumnCountProperty); }
-            set { SetValue(ColumnCountProperty, value); }
+            set {   SetValue(ColumnCountProperty, value); }
         }
-        public double TileSize
+        public int TileSize
         {
-            get { return (double)GetValue(TileSizeProperty); }
-            set { SetValue(TileSizeProperty, value); }
+            get { return (int)GetValue(TileSizeProperty); }
+            set { SetValue(TileSizeProperty, value);}
+        }
+        public Rect TileViewPort
+        {
+            get { return new Rect(0,0,TileSize,TileSize); }
         }
         #endregion
 
@@ -61,6 +61,7 @@ namespace ggMapEditor.Views.Controls
         {
             MatrixGrid matrixGrid = (MatrixGrid)sender;
             matrixGrid.RowCount = (int)e.NewValue;
+
         }
         private static void OnColumnCountChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
@@ -70,17 +71,12 @@ namespace ggMapEditor.Views.Controls
         private static void OnTileSizeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             MatrixGrid matrixGrid = (MatrixGrid)sender;
-            matrixGrid.TileSize = (double)e.NewValue;
+            matrixGrid.TileSize = (int)e.NewValue;
         }
         #endregion
 
-        private void InitGrid()
+        public void InitGrid()
         {
-            TileSize = 30;
-            RowCount = 30;
-            ColumnCount = 10;
-            ///====================
-
             if (TileSize == 0 || RowCount == 0 | ColumnCount == 0)
                 return;
 
@@ -96,22 +92,41 @@ namespace ggMapEditor.Views.Controls
             // Create collumns, rows
             for (int i = 0; i < RowCount - 1; i++)
                 grid.RowDefinitions.
-                    Add(new RowDefinition(){ Height = new GridLength(32)});
+                    Add(new RowDefinition(){ Height = new GridLength(TileSize)});
             for (int i = 0; i < ColumnCount - 1; i++)
                 grid.ColumnDefinitions.
-                    Add(new ColumnDefinition() { Width = new GridLength(32) });
+                    Add(new ColumnDefinition() { Width = new GridLength(TileSize) });
 
             // Add Cells
             for (int i = 0; i < RowCount; i++)
                 for (int k = 0; k < ColumnCount; k++)
                 {
                     DragableLayout layout = new DragableLayout();
+                    //layout.id = QuadTree.QuadTree.GetPositionQuadTree(new System.Drawing.Point((int)(i*TileSize), (int)(k*TileSize)), grid as Panel);
                     grid.Children.Add(layout);
                     Grid.SetRow(layout, i);
                     Grid.SetColumn(layout, k);
+                    //listCellHasChild.Add(layout);
                 }
         }
 
-        
+        public ObservableCollection<Models.Tile> RetrieveTiles()
+        {
+            ObservableCollection<Models.Tile> listTile = new ObservableCollection<Models.Tile>();
+            foreach (var cell in grid.Children)
+            { 
+                var childrens = (cell as DragableLayout).GetChildren();
+                if (childrens.Count > 0)
+                {
+                    Controls.Tile ctrTile = childrens.First() as Controls.Tile;
+                    Models.Tile tile = new Models.Tile();
+                    //tile.RectImage = ctrTile.RectImage;
+                    Point cellPosition = ctrTile.TransformToAncestor(grid).Transform(new Point(0, 0));
+                    tile.Bound = new Int32Rect((int)cellPosition.X, (int)cellPosition.Y, TileSize, TileSize);
+                    listTile.Add(tile);
+                }
+            }
+            return listTile;
+        }
     }
 }

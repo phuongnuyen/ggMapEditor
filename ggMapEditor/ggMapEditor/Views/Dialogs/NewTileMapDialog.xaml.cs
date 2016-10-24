@@ -19,9 +19,18 @@ namespace ggMapEditor.Views.Dialogs
     /// </summary>
     public partial class NewTileMapDialog : Window
     {
+        ViewModels.NewTileMapViewModel vm;
+
         public NewTileMapDialog()
         {
             InitializeComponent();
+            vm = new ViewModels.NewTileMapViewModel();
+            this.DataContext = vm;
+        }
+
+        public Models.Combine GetCombine()
+        {
+            return vm.GetCombine();
         }
     }
 }

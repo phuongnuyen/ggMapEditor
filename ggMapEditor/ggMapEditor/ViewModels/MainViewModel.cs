@@ -4,56 +4,100 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ggMapEditor.Commands;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace ggMapEditor.ViewModels
 {
     class MainViewModel : Base.BaseViewModel
     {
-        Models.TileMap tileMap;
+        public Models.Combine combine { get; set; }
         public int Width
         {
-            get { return tileMap.width; }
+            get { return combine.tileMap.width; }
             set
             {
-                tileMap.width = value;
+                combine.tileMap.width = value;
                 RaisePropertyChanged("Width");
             }
         }
         public int Height
         {
-            get { return tileMap.height; }
+            get { return combine.tileMap.height; }
             set
             {
-                tileMap.height = value;
+                combine.tileMap.height = value;
                 RaisePropertyChanged("Heigth");
             }
         }
         public int TileSize
         {
-            get { return tileMap.tileSize; }
+            get { return combine.tileMap.tileSize; }
             set
             {
-                tileMap.tileSize = value;
+                combine.tileMap.tileSize = value;
                 RaisePropertyChanged("TileSize");
             }
         }
-        public ObservableCollection<Models.Tileset> Tileset
+        //public ObservableCollection<Models.Tileset> Tilesets
+        //{
+        //    get { return combine.tilesets; }
+        //    set
+        //    {
+        //        combine.tilesets = value;
+        //        RaisePropertyChanged("Tilesets");
+        //    }
+        //}
+
+        public Models.Tileset Tileset
         {
-            get { return tileMap.tilesets; }
+            get { return combine.tileset; }
             set
             {
-                tileMap.tilesets = value;
-                RaisePropertyChanged("Tilesets");
+                combine.tileset = value;
+                RaisePropertyChanged("Tileset");
             }
         }
-        public ObservableCollection<Models.Layer> layers
+        //public ObservableCollection<Models.Layer> layers
+        //{
+        //    get { return combine.layers; }
+        //    set
+        //    {
+        //        combine.layers = value;
+        //        RaisePropertyChanged("Layers");
+        //    }
+        //}
+
+        public MainViewModel()
         {
-            get { return tileMap.layers; }
-            set
+            combine = new Models.Combine();
+            SaveTileMapCommand = new RelayCommand(SaveTileMap);
+            //NewTileSetCommand = new RelayCommand(NewTileset);
+        }
+
+        public RelayCommand SaveTileMapCommand { get; set; }
+        public RelayCommand NewTileSetCommand { get; set; }
+
+        private void SaveTileMap(object parameter)
+        {
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "Tile map files|*json";
+            fileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            fileDialog.FileName = "untitled.json";
+            if (fileDialog.ShowDialog() == true)
             {
-                tileMap.layers = value;
-                RaisePropertyChanged("Layers");
+                string json = JsonConvert.SerializeObject(combine);
+                System.IO.File.WriteAllText(fileDialog.FileName, json);
             }
         }
+        //private void NewTileset(object parameter)
+        //{
+        //    Views.Dialogs.AddTilesetDialog fileDialog = new Views.Dialogs.AddTilesetDialog();
+        //    fileDialog.ShowDialog();
+        //    //tilesetBox.Tiles = fileDialog.GetTiles();
+        //    combine.tileset = fileDialog.GetTileset();
+        //}
     }
 }

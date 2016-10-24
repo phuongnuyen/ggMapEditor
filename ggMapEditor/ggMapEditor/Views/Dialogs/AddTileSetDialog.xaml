@@ -25,9 +25,9 @@
                     <TextBlock DockPanel.Dock="Left"
                                Text="Name"
                                Margin="0,0,10,0"/>
-                    <TextBox Name="tbName"
-                             DockPanel.Dock="Left"
-                             Background="LightGray"/>
+                    <TextBox DockPanel.Dock="Left"
+                             Background="LightGray"
+                             Text="{Binding Name}"/>
                 </DockPanel>
 
                 <DockPanel Margin="5">
@@ -53,7 +53,7 @@
                                Text="Source"
                                Margin="0,0,10,0"/>
                     <TextBlock Name="tbImagePath"
-                               Text="{Binding ImageUri, Mode=OneWay}"
+                               Text="{Binding ImageUri}"
                                DockPanel.Dock="Left"
                                Background="LightGray"
                                Width="150"/>
@@ -61,7 +61,6 @@
                             Content="Browse..."
                             Margin="10,0,0,0"
                             Command="{Binding OpenFileCommand}"/>
-                    <!--Click="BrowswImage_Click"/>-->
                 </DockPanel>
                 <DockPanel Margin="5"
                            HorizontalAlignment="Left">
@@ -71,7 +70,7 @@
                     <TextBox Name="tbTileSize"
                              DockPanel.Dock="Left"
                              Background="LightGray"
-                             Text="{Binding TileSize, Mode=TwoWay}"
+                             Text="{Binding TileSize}"
                              Width="30"/>
                 </DockPanel>
             </StackPanel>
@@ -88,7 +87,7 @@
                     Command="{Binding OkCommand}"/>
             <Button Content="Cancel"
                     Width="60"
- />
+                    Command="{Binding CancelCommand}"/>
         </StackPanel>
     </Grid>
 </Window>

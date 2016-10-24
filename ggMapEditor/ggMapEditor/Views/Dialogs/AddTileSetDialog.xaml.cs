@@ -24,22 +24,16 @@ namespace ggMapEditor.Views.Dialogs
     {
         ViewModels.AddTilesetViewModel vm;
 
-        //public event PropertyChangedEventHandler PropertyChanged;
-        //internal void RaisePropertyChanged(string property)
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        //}
-
-        public AddTilesetDialog()
+        public AddTilesetDialog(string folderPath)
         {
             InitializeComponent();
-            vm = new ViewModels.AddTilesetViewModel();
+            vm = new ViewModels.AddTilesetViewModel(folderPath);
             this.DataContext = vm;
         }
 
-        public ObservableCollection<Views.Controls.Tile> GetTiles()
+        public Models.Tileset GetTileset()
         {
-            return vm.Tiles;
+            return vm.GetTileset();
         }
     }
 }

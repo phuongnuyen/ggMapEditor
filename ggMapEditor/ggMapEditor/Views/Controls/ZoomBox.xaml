@@ -6,31 +6,6 @@
              xmlns:local="clr-namespace:ggMapEditor.Views.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <!--<UserControl.Resources>
-        <DrawingBrush x:Key="Offset" 
-                      TileMode="Tile"
-                      Viewport="0,0,32,32"
-                      ViewportUnits="Absolute">
-            <DrawingBrush.Drawing>
-                <GeometryDrawing>
-                    <GeometryDrawing.Geometry>
-                        --><!--<RectangleGeometry Rect="0,0,32,32"/>--><!--
-                        <GeometryGroup>
-                            <LineGeometry StartPoint="0,0" EndPoint="0,100"/>
-                            <LineGeometry StartPoint="0,100" EndPoint="100,100"/>
-                        </GeometryGroup>
-                    </GeometryDrawing.Geometry>
-                    <GeometryDrawing.Pen>
-                        <Pen Brush="Black" Thickness="0.5">
-                            <Pen.DashStyle>
-                                <DashStyle Dashes="10,10"/>
-                            </Pen.DashStyle>
-                        </Pen>
-                    </GeometryDrawing.Pen>
-                </GeometryDrawing>
-            </DrawingBrush.Drawing>
-        </DrawingBrush>
-    </UserControl.Resources>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>

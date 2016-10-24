@@ -12,13 +12,14 @@ namespace ggMapEditor.Views.Controls
     /// Interaction logic for Tile.xaml
     /// </summary>
     public partial class Tile : UserControl
-    { 
+    {
+        private Models.Tile tile;
 
         public static readonly DependencyProperty TileSourceProperty
-            = DependencyProperty.Register("TileSource", typeof(ImageSource), typeof(Tile),
+            = DependencyProperty.Register("TileSource", typeof(ImageSource), typeof(Controls.Tile),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTileSourceChanged)));
         public static readonly DependencyProperty TileSizeProperty
-            = DependencyProperty.Register("TileSize", typeof(double), typeof(Tile),
+            = DependencyProperty.Register("TileSize", typeof(double), typeof(Controls.Tile),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTileSizeChanged)));
         #region constructors
         public Tile()
@@ -31,10 +32,12 @@ namespace ggMapEditor.Views.Controls
             InitializeComponent();
             this.TileSize = tile.TileSize;
             this.TileSource = tile.TileSource;
+            //this.RectImage = tile.RectImage;
         }
         #endregion
 
         #region properties
+        public long ImgId { get; set; }
         public ImageSource TileSource
         {
             get { return (ImageSource)GetValue(TileSourceProperty); }
@@ -49,13 +52,14 @@ namespace ggMapEditor.Views.Controls
                 SetValue(TileSizeProperty, value);
             }
         }
+        //public Int32Rect RectImage { get; set; }
         #endregion
 
         #region CallBacks
         private static void OnTileSourceChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             Tile tile = (Tile)sender;
-            tile.tileImg.Source = (ImageSource)e.NewValue;//new BitmapImage((Uri)e.NewValue);
+            tile.tileImg.Source = (ImageSource)e.NewValue;
         }
         private static void OnTileSizeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {

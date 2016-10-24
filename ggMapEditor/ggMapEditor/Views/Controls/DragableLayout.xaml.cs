@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
@@ -9,6 +10,7 @@ namespace ggMapEditor.Views.Controls
     [ContentProperty(nameof(Children))]
     public partial class DragableLayout : UserControl
     {
+        private ObservableCollection<UIElement> listChild;
         public static readonly DependencyPropertyKey ChildrenProperty = DependencyProperty.RegisterReadOnly
         (
             nameof(Children),
@@ -26,8 +28,13 @@ namespace ggMapEditor.Views.Controls
         public DragableLayout()
         {
             InitializeComponent();
+            listChild = new ObservableCollection<UIElement>();
         }
 
+        public ObservableCollection<UIElement> GetChildren()
+        {
+            return listChild;
+        }
 
         private void Layout_DragOver(object sender, DragEventArgs e)
         {
@@ -53,13 +60,10 @@ namespace ggMapEditor.Views.Controls
                         if (e.AllowedEffects.HasFlag(DragDropEffects.Copy))
                         {
                             Views.Controls.Tile tile = new Views.Controls.Tile(element as Controls.Tile);
+                            panel.Name = "panel";
                             panel.Children.Add(tile);
-
-                            //var mousePos = e.GetPosition(panel);
-                            //Canvas.SetTop(tile, mousePos.Y - tile.TileSize / 2);
-                            //Canvas.SetLeft(tile, mousePos.X - tile.TileSize / 2);
+                            listChild.Add(tile);
                             e.Effects = DragDropEffects.Copy;
-
                         }
                     }
                 }

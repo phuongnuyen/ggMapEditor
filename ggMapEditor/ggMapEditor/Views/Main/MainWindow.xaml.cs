@@ -10,11 +10,31 @@ namespace ggMapEditor.Views.Main
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string fileName;
+        //private ViewModels.MainViewModel vm;
+        private Models.Combine combine;
+        public int ColumCount
+        {
+            get { return TileMap.width/TileMap.tileSize; }
+        }
+        public int RowCount
+        {
+            get { return TileMap.height / TileMap.tileSize; }
+        }
+
+        public Models.TileMap TileMap
+        {
+            get { return combine.tileMap; }
+            set
+            {
+                combine.tileMap = value;
+            }
+        }
 
         public MainWindow()
         {
             InitializeComponent();
+            //vm = new ViewModels.MainViewModel();
+            //this.DataContext = vm;
         }
 
         private void SaveTileMap_Click(object sender, RoutedEventArgs e)
@@ -30,7 +50,7 @@ namespace ggMapEditor.Views.Main
                 System.IO.File.WriteAllText(fileDialog.FileName, json);
             }
 
-                
+
         }
 
         private void OpenTileMap_Click(object sender, RoutedEventArgs e)
@@ -40,21 +60,28 @@ namespace ggMapEditor.Views.Main
             fileDialog.Filter = "Tile map files (*tmx)|*.tmx";
             fileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            if (fileDialog.ShowDialog() == true)
-                fileName = fileDialog.FileName + ".tmx";
+            //if (fileDialog.ShowDialog() == true)
+            //    fileName = fileDialog.FileName + ".tmx";
         }
 
         private void NewTileMap_Click(object sender, RoutedEventArgs e)
         {
             Dialogs.NewTileMapDialog fileDialog = new Dialogs.NewTileMapDialog();
             fileDialog.ShowDialog();
+            if (fileDialog.GetCombine() != null)
+            {
+                combine = fileDialog.GetCombine();
+            }
+
         }
 
         private void NewTileSet_Click(object sender, RoutedEventArgs e)
         {
-            Dialogs.AddTilesetDialog fileDialog = new Dialogs.AddTilesetDialog();
+            Dialogs.AddTilesetDialog fileDialog = new Dialogs.AddTilesetDialog(combine.folderPath);
             fileDialog.ShowDialog();
-            tilesetBox.Tiles = fileDialog.GetTiles();
+            combine.tileset = fileDialog.GetTileset();
+
+            tilesetBox.SetTileset(combine.tileset);
         }
 
 
