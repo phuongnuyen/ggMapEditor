@@ -35,7 +35,7 @@ namespace ggMapEditor.Views.Fragments
         {
             get
             {
-                return tileset.name;
+                return tileset.id;
             }
             private set
             {
@@ -85,7 +85,8 @@ namespace ggMapEditor.Views.Fragments
                     Controls.Tile tile = new Controls.Tile();
                     CroppedBitmap croppedBitmap = new CroppedBitmap(source, new Int32Rect(t.x, t.y, tileset.tileWidth, tileset.tileHeight));
                     tile.TileSource = croppedBitmap;
-                    tile.TileSize = tileset.tileWidth;
+                    tile.TileWidth = tileset.tileWidth;
+                    tile.TileHeight = tile.TileHeight;
                     tile.ImgId = t.id;
                     CtrTiles.Add(tile);
                 }

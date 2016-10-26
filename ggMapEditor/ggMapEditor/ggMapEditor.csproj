@@ -94,9 +94,9 @@
     <Compile Include="Helpers\DialogCloser.cs" />
     <Compile Include="Helpers\StaticHelpers.cs" />
     <Compile Include="Json\FileIO.cs" />
+    <Compile Include="Json\JsonFormat.cs" />
     <Compile Include="Models\Combine.cs" />
     <Compile Include="Models\Layer.cs" />
-    <Compile Include="Models\Base\Object.cs" />
     <Compile Include="Models\Tile.cs" />
     <Compile Include="Models\TileMap.cs" />
     <Compile Include="Models\Tileset.cs" />
@@ -161,15 +161,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Main\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Base.cs" />
     <Compile Include="Views\Fragments\LayerBox.xaml.cs">
       <DependentUpon>LayerBox.xaml</DependentUpon>
     </Compile>
@@ -178,10 +173,6 @@
     </Compile>
     <Compile Include="Views\Main\DragWindow.xaml.cs">
       <DependentUpon>DragWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Dialogs\HelpDialog.xaml">
       <SubType>Designer</SubType>
@@ -227,9 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="2.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="rampo.jpg" />

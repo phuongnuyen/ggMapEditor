@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ggMapEditor
 {
-    //public enum VisibilityType { Visible, Hide };
+    //public enum Visibility { Visible, Hide };
     public enum TilesetType { Base, Collections };
+    public enum TileType { singleTipe, animationTile};
 }

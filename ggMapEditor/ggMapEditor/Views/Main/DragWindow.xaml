@@ -28,7 +28,8 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ctrl:Tile TileSize="32"
+            <ctrl:Tile TileHeight="32"
+                       TileWidth="32"
                        TileSource="pack://application:,,,/rampo.jpg"/>
         </Grid>
     </Grid>

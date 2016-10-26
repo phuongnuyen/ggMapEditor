@@ -21,7 +21,7 @@
                       Grid.Column="1"
                       HorizontalScrollBarVisibility="Hidden"
                       VerticalScrollBarVisibility="Hidden"
-                      Background="DarkGray">
+                      Background="#545454">
             <Grid Name="container"
                   RenderTransformOrigin="0.5, 0.5"
                   Width="{Binding ElementName=scrollViewer, Path=ActualWidth}"

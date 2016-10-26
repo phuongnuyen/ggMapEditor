@@ -9,24 +9,19 @@ using ggMapEditor.QuadTree;
 
 namespace ggMapEditor.QuadTree
 {
-    
-
-    class QuadTree<T>
+    public class QuadTree<T>
     {
-        private int cellSize; //
-        private ObservableCollection<QTObject<T>> listObj;
-        private QuadNode<T> root;
+        public static int MaxObjPerCell = 1; // so phan tu toi da trong mot o
+        public static int MinCellWidth = 32;
+        public static int MinCellHeight = 32;
 
-        public QuadTree(Int32Rect rect, ObservableCollection<QTObject<T>> objs)
+        private ObservableCollection<QTObject> listObj;
+        private QuadNode root;
+
+        public QuadTree(Int32Rect rect, ObservableCollection<QTObject> objs)
         {
             listObj = objs;
-            root = new QuadNode<T>(rect, listObj);
-            cellSize = 32;
-        }
-
-        public void SetCellSize(int cellSize)
-        {
-            this.cellSize = cellSize;
+            root = new QuadNode(rect, null);
         }
 
         public void Clear()
@@ -37,12 +32,25 @@ namespace ggMapEditor.QuadTree
         public void CreateQuadTree()
         {
             foreach (var o in listObj)
-                root.Insert(o, cellSize);
+                root.Insert(o);
         }
 
-        public ObservableCollection<QTObject<T>> RetrieveObjects()
+        public ObservableCollection<QuadNode> RetrieveQuadNodes()
         {
-            return root.RetrieveObject();
+            var listNode = root.RetrieveQuadNodes();
+            //listNode.Sort(delegate (QuadNode n1, QuadNode n2) { return n1.id.CompareTo(n2.id); });
+            //listNode.Sort((a, b) => a.id.CompareTo(b.id));
+            listNode = new ObservableCollection<QuadNode>(listNode.OrderBy(n => n.id));
+            return listNode;
+        }
+
+        public int GetTotalNodeSize()
+        {
+            return root.GetTotalNodeSize();
+        }
+        public int GetTotalLeafNodeSize()
+        {
+            return root.GetTotalLeafNodeSize();
         }
     }
 }

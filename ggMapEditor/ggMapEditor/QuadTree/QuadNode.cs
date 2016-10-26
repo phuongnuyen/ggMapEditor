@@ -1,118 +1,128 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ggMapEditor.Helpers;
+using Newtonsoft.Json;
 
 namespace ggMapEditor.QuadTree
 {
-    public class QTObject<T>
+    public struct QTObject
     {
-        public string id;
-        public T obj;
-        public Int32Rect rect;  // Rect tra ve cua doi tuong
-
-        public QTObject(Int32Rect rect, T obj)
-        {
-            this.id = "";
-            this.obj = obj;
-            this.rect = rect;
-        }
+        public string type;
+        public Models.Tile value;
     }
 
-    class QuadNode<T>
-    {
-        private ObservableCollection<QTObject<T>> listObj;
-        private Int32Rect rect;
+    public class QuadNode
+    { 
+        public int x;
+        public int y;
+        public int width;
+        public int height;
 
-        private QuadNode<T> topLeft;
-        private QuadNode<T> topRight;
-        private QuadNode<T> bottomLeft;
-        private QuadNode<T> bottomRight;
-        public bool hasChild;  //Node la
-        public int level;
+        public long leftTop { get; set; }
+        public long rightTop { get; set; }
+        public long rightBottom { get; set; }
+        public long leftBottom { get; set; }
 
-        public QuadNode(Int32Rect rect, ObservableCollection<QTObject<T>> objs = null)
+        public long id;
+        public ObservableCollection<QTObject> tileList = new ObservableCollection<QTObject>();
+
+        private Dictionary<long, QuadNode> listChild;
+
+
+
+
+        public QuadNode(Int32Rect rect, ObservableCollection<QTObject> tiles, long id = -1)
         {
-            if (listObj == null)
-                listObj = new ObservableCollection<QTObject<T>>();
-            else listObj = objs;
-            this.rect = rect;
+            this.id = id;
+            listChild = null;
 
-            topLeft = null;
-            topRight = null;
-            bottomLeft = null;
-            bottomRight = null;
+            if (tiles != null)
+                tileList = tiles;
 
-            hasChild = false;
+            x = rect.X;
+            y = rect.Y;
+            width = rect.Width;
+            height = rect.Height;
         }
+
 
         public void Clear()
         {
-            if (this.hasChild == false)
-                return;
-            topLeft.Clear();
-            topRight.Clear();
-            bottomLeft.Clear();
-            bottomRight.Clear();
-            listObj.Clear();
-        }
-
-        private bool IsContain(QTObject<T> obj)
-        {
-            return !(obj.rect.X + obj.rect.Width < rect.X
-                    || obj.rect.Y + obj.rect.Height < rect.Y
-                    || obj.rect.X > obj.rect.Width + rect.X
-                    || obj.rect.Y > obj.rect.Height + rect.Y);
-        }
-
-        public void Insert(QTObject<T> obj, int cellSize)
-        {
-            if (hasChild)
+            if (listChild != null)
             {
-                if (topLeft.IsContain(obj))
-                    topLeft.Insert(obj, cellSize);
-                if (topRight.IsContain(obj))
-                    topRight.Insert(obj, cellSize);
-                if (bottomLeft.IsContain(obj))
-                    bottomLeft.Insert(obj, cellSize);
-                if (bottomRight.IsContain(obj))
-                    bottomRight.Insert(obj, cellSize);
+                listChild[leftTop].Clear();
+                listChild[rightTop].Clear();
+                listChild[rightBottom].Clear();
+                listChild[leftBottom].Clear();
+                tileList.Clear();
+            }
+        }
+
+        private bool IsContain(QTObject obj)
+        {
+            var rect = obj.value.rectPos;
+            return !(rect.X + rect.Width <= x
+                    || rect.Y + rect.Height <= y
+                    || rect.X >= x + width
+                    || rect.Y >= y + height);
+        }
+
+        public void Insert(QTObject obj)
+        {
+            Debug.Print("Node: " + id + "objs id: " + obj.value.tileId +", objs count: " + tileList.Count);
+            if (listChild != null)
+            {
+                if (listChild[leftTop].IsContain(obj))
+                    listChild[leftTop].Insert(obj);
+                if (listChild[rightTop].IsContain(obj))
+                    listChild[rightTop].Insert(obj);
+                if (listChild[rightBottom].IsContain(obj))
+                    listChild[rightBottom].Insert(obj);
+                if (listChild[leftBottom].IsContain(obj))
+                    listChild[leftBottom].Insert(obj);
             }
             else
             {
                 if (this.IsContain(obj))
-                listObj.Add(obj);
-                if (rect.Width > cellSize || rect.Height > cellSize)
+                    tileList.Add(obj);
+                if (tileList.Count > QuadTree<Models.Tile>.MaxObjPerCell
+                    && height > QuadTree<Models.Tile>.MinCellHeight
+                    && width > QuadTree<Models.Tile>.MinCellWidth)
                 {
                     Split();
+                    Debug.Print("Split "
+                        + leftTop.ToString() + ", "
+                        + rightTop.ToString() + ", "
+                        + rightBottom.ToString() + ", "
+                        + leftBottom.ToString());
 
-                    while (listObj.Count != 0)
+                    while (tileList.Count > 0)
                     {
-                        var lastObj = this.listObj.Last();
-                        this.listObj.Remove(listObj.Last());
+                        var lastTile = tileList.Last();
+                        tileList.Remove(tileList.Last());
 
-                        if (topLeft.IsContain(lastObj))
+                        if (listChild[leftTop].IsContain(lastTile))
                         {
-                            lastObj.id += "1";
-                            topLeft.listObj.Add(lastObj);
+                            listChild[leftTop].Insert(lastTile);
                         }
-                        if (topRight.IsContain(lastObj))
+                        if (listChild[rightTop].IsContain(lastTile))
                         {
-                            lastObj.id += "2";
-                            topRight.listObj.Add(lastObj);
+                            listChild[rightTop].Insert(lastTile);
                         }
-                        if (bottomLeft.IsContain(lastObj))
+                        if (listChild[rightBottom].IsContain(lastTile))
                         {
-                            lastObj.id += "3";
-                            bottomLeft.listObj.Add(lastObj);
+                            listChild[rightBottom].Insert(lastTile);
                         }
-                        if (bottomRight.IsContain(lastObj))
+                        if (listChild[leftBottom].IsContain(lastTile))
                         {
-                            lastObj.id += "4";
-                            bottomRight.listObj.Add(lastObj);
+                            listChild[leftBottom].Insert(lastTile);
+
                         }
                     }
                 }
@@ -121,36 +131,102 @@ namespace ggMapEditor.QuadTree
 
         private void Split()
         {
-            topLeft = new QuadNode<T>
-                (new Int32Rect(rect.X, rect.Y, rect.Width / 2, rect.Height / 2));
-            topRight = new QuadNode<T>
-                (new Int32Rect(rect.X, rect.Height / 2, rect.Width / 2, rect.Height / 2));
-            bottomLeft = new QuadNode<T>
-                (new Int32Rect(rect.Width / 2, rect.Y / 2, rect.Width / 2, rect.Height / 2));
-            bottomRight = new QuadNode<T>
-                (new Int32Rect(rect.Width / 2, rect.Height / 2, rect.Width / 2, rect.Height / 2));
-            hasChild = true;
+            leftTop = ((id + 1) * 4);
+            rightTop = ((id + 1) * 4) + 1;
+            rightBottom = ((id + 1) * 4) + 2;
+            leftBottom = ((id + 1) * 4) + 3;
+
+            listChild = new Dictionary<long, QuadNode>();
+            listChild.Add(leftTop, new QuadNode     (new Int32Rect(x,              y,              width / 2, height / 2), null, leftTop));
+            listChild.Add(rightTop, new QuadNode    (new Int32Rect(x + width / 2,  y,              width / 2, height / 2), null, rightTop));
+            listChild.Add(rightBottom, new QuadNode (new Int32Rect(x + width / 2,  y + height / 2, width / 2, height / 2), null, rightBottom));
+            listChild.Add(leftBottom, new QuadNode  (new Int32Rect(x,              y + height / 2, width / 2, height / 2), null, leftBottom));
+            //hasChild = true;
         }
 
-        public ObservableCollection<QTObject<T>> RetrieveObject()
+        public ObservableCollection<QuadNode> RetrieveQuadNodes()
         {
-            ObservableCollection<QTObject<T>> listReturn = listObj;
-            if (hasChild)
+            ObservableCollection<QuadNode> listNode = new ObservableCollection<QuadNode>();
+            listNode.Add(this);
+            if (listChild != null)
             {
-                    listReturn = JoinList(listReturn, topLeft.RetrieveObject());
-                    listReturn = JoinList(listReturn, topRight.RetrieveObject());
-                    listReturn = JoinList(listReturn, bottomLeft.RetrieveObject());
-                    listReturn = JoinList(listReturn, bottomRight.RetrieveObject());
+                listNode = listNode.Union(listChild[leftTop].RetrieveQuadNodes()).ToObservableCollection();
+                listNode = listNode.Union(listChild[rightTop].RetrieveQuadNodes()).ToObservableCollection();
+                listNode = listNode.Union(listChild[rightBottom].RetrieveQuadNodes()).ToObservableCollection();
+                listNode = listNode.Union(listChild[leftBottom].RetrieveQuadNodes()).ToObservableCollection();
             }
-            return listReturn;
+            return listNode;
         }
-        private ObservableCollection<QTObject<T>> JoinList(ObservableCollection<QTObject<T>> list1, ObservableCollection<QTObject<T>> list2)
-        {
-            ObservableCollection<QTObject<T>> result = list1;
-            foreach (var item in list2)
-                result.Add(item);
 
-            return result;
+        public bool ShouldSerializeChildId()
+        {
+            return !(listChild[leftTop] == null
+                    || listChild[rightTop] == null
+                    || listChild[rightBottom] == null
+                    || listChild[leftBottom] == null);
         }
+        public bool ShouldSerializeleftTop()
+        {
+            return !(listChild == null || listChild[leftTop] == null);
+        }
+        public bool ShouldSerializerightTop()
+        {
+            return !(listChild == null || listChild[rightTop] == null);
+        }
+        public bool ShouldSerializerightBottom()
+        {
+            return !(listChild == null || listChild[rightBottom] == null);
+        }
+        public bool ShouldSerializeleftBottom()
+        {
+            return !(listChild == null || listChild[leftBottom] == null);
+        }
+
+        public int GetTotalNodeSize()
+        {
+            if (listChild == null)
+                return 1;
+            int node = 1;
+            node += listChild[leftTop].GetTotalNodeSize();
+            node += listChild[rightTop].GetTotalNodeSize();
+            node += listChild[rightBottom].GetTotalNodeSize();
+            node += listChild[leftBottom].GetTotalNodeSize();
+
+            return node;
+        }
+        public int GetTotalLeafNodeSize()
+        {
+            if (listChild == null)
+                return 1;
+            int node = 0;
+            node += listChild[leftTop].GetTotalNodeSize();
+            node += listChild[rightTop].GetTotalNodeSize();
+            node += listChild[rightBottom].GetTotalNodeSize();
+            node += listChild[leftBottom].GetTotalNodeSize();
+
+            return node;
+
+        }
+
+        //public ObservableCollection<QTObject<T>> RetrieveObject()
+        //{
+        //    ObservableCollection<QTObject<T>> listReturn = listObj;
+        //    if (hasChild)
+        //    {
+        //            listReturn = JoinList(listReturn, topLeft.RetrieveObject());
+        //            listReturn = JoinList(listReturn, topRight.RetrieveObject());
+        //            listReturn = JoinList(listReturn, bottomLeft.RetrieveObject());
+        //            listReturn = JoinList(listReturn, bottomRight.RetrieveObject());
+        //    }
+        //    return listReturn;
+        //}
+        //private ObservableCollection<QTObject<T>> JoinList(ObservableCollection<QTObject<T>> list1, ObservableCollection<QTObject<T>> list2)
+        //{
+        //    ObservableCollection<QTObject<T>> result = list1;
+        //    foreach (var item in list2)
+        //        result.Add(item);
+
+        //    return result;
+        //}
     }
 }

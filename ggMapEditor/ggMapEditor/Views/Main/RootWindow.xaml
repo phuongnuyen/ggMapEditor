@@ -10,16 +10,19 @@
         xmlns:frag="clr-namespace:ggMapEditor.Views.Fragments"
         mc:Ignorable="d"
         ResizeMode="CanResize"
+        WindowStartupLocation="CenterScreen"
         Title="Map Editor" Width="1080" Height="768">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
-        <Menu x:Name="menu" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Menu x:Name="menu" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+              Visibility="Collapsed"
+              Height="30">
             <MenuItem Header="File">
                 <Button Content="New"
                         Click="NewTileMap_Click"/>
@@ -64,57 +67,67 @@
         </Menu>
 
         <StatusBar Grid.Row="3">
-            <StatusBarItem Content="dock 1.3 Sample Project"/>
+            <StatusBarItem x:Name="status"/>
         </StatusBar>
 
         <dock:DockingManager x:Name="dockingManager"
                              Grid.Row="2">
             <dock:LayoutRoot>
                 <dock:LayoutPanel Orientation="Horizontal">
-                    <dock:LayoutAnchorablePane DockMinWidth="500">
-                        <dock:LayoutAnchorable>
-                            <ctrl:ZoomBox x:Name="zoomBox"/>
-                        </dock:LayoutAnchorable>
-                    </dock:LayoutAnchorablePane>    
+                    <dock:LayoutDocumentPaneGroup DockMinWidth="500">
+                        <dock:LayoutDocumentPane>
+                            <dock:LayoutDocument>
+                                <ctrl:ZoomBox x:Name="zoomBox"/>
+                            </dock:LayoutDocument>
+                        </dock:LayoutDocumentPane>
+                    </dock:LayoutDocumentPaneGroup>    
                     <dock:LayoutAnchorablePaneGroup DockMinWidth="260"
                                                     Orientation="Vertical">
                         <dock:LayoutAnchorablePane>
                             <dock:LayoutAnchorable Title="Tilesets">
                                 <frag:TilesetBox x:Name="tilesetBox"/>
                             </dock:LayoutAnchorable>
-                            <dock:LayoutAnchorable Title="Mini-map">
+                            <!--<dock:LayoutAnchorable Title="Mini-map">
                                 <Slider x:Name="sliScale"
                                         Value="1"
                                         Minimum="1"
                                         Maximum="10"/>
-                            </dock:LayoutAnchorable>
+                            </dock:LayoutAnchorable>-->
                         </dock:LayoutAnchorablePane>
-                        <dock:LayoutAnchorablePane >
+                        <!--<dock:LayoutAnchorablePane >
                             <dock:LayoutAnchorable Title="Layers">
                                 <frag:LayerBox x:Name="layerBox"/>
                             </dock:LayoutAnchorable>
                             <dock:LayoutAnchorable Title="Properties">
                                 <TextBox/>
                             </dock:LayoutAnchorable>
-                        </dock:LayoutAnchorablePane>
+                        </dock:LayoutAnchorablePane>-->
                     </dock:LayoutAnchorablePaneGroup>
                 </dock:LayoutPanel>
             </dock:LayoutRoot>
         </dock:DockingManager>
         <ToolBarTray Grid.Row="1"
-                     Height="30"
-                     Visibility="Collapsed">
+                     Height="30">
             <ToolBar>
-                <Button Content="New"/>
-                <Button Content="Open"/>
-                <Button Content="Save"/>
+                <Button Content="New Tile Map"
+                        Click="NewTileMap_Click"
+                        Margin="5, 0"/>
+                <Button Content="New Tileset"
+                        Click="NewTileSet_Click"
+                        Margin="5, 0"/>
+                <!--<Button Content="Open"
+                        Click="OpenTileMap_Click"
+                        Margin="5, 0"/>-->
+                <Button Content="Save"
+                        Click="SaveTileMap_Click"
+                        Margin="5, 0"/>
             </ToolBar>
-        <ToolBar>
+        <ToolBar Visibility="Collapsed">
             <Button Content="Cut"/>
             <Button Content="Copy"/>
             <Button Content="Parse"/>
         </ToolBar>
-        <ToolBar>
+        <ToolBar Visibility="Collapsed">
             <Button Content="Undo"/>
             <Button Content="Redo"/>
         </ToolBar>

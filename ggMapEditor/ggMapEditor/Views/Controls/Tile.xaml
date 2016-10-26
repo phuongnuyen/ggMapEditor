@@ -8,7 +8,8 @@
              SnapsToDevicePixels="True">
     <Image Name="tileImg"
             Source="{Binding TileSource, Mode=OneWay}"
-            Width="{Binding TileSize, Mode=OneWay}"
-            Height="{Binding TileSize, Mode=OneWay}"
-           Stretch="Uniform"/>
+            Width="{Binding TileWidth, Mode=OneWay}"
+            Height="{Binding TileHeight, Mode=OneWay}"
+           Stretch="Uniform"
+           ToolTip="{Binding ImgId, Mode=OneWay}"/>
 </UserControl>

@@ -18,9 +18,15 @@ namespace ggMapEditor.Views.Controls
         public static readonly DependencyProperty TileSourceProperty
             = DependencyProperty.Register("TileSource", typeof(ImageSource), typeof(Controls.Tile),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTileSourceChanged)));
-        public static readonly DependencyProperty TileSizeProperty
-            = DependencyProperty.Register("TileSize", typeof(double), typeof(Controls.Tile),
-                new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTileSizeChanged)));
+        public static readonly DependencyProperty TileWidthProperty
+            = DependencyProperty.Register("TileHeight", typeof(double), typeof(Controls.Tile),
+                new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTileWidthChanged)));
+        public static readonly DependencyProperty TileHeightProperty
+           = DependencyProperty.Register("TileWidth", typeof(double), typeof(Controls.Tile),
+                new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTileHeightChanged)));
+        public static readonly DependencyProperty ImgIdProperty
+           = DependencyProperty.Register("ImgId", typeof(long), typeof(Controls.Tile),
+                new FrameworkPropertyMetadata(new PropertyChangedCallback(OnImgIdChanged)));
         #region constructors
         public Tile()
         {
@@ -30,26 +36,39 @@ namespace ggMapEditor.Views.Controls
         public Tile(Tile tile)
         {
             InitializeComponent();
-            this.TileSize = tile.TileSize;
+            this.TileHeight = tile.TileHeight;
+            this.TileWidth = tile.TileWidth;
             this.TileSource = tile.TileSource;
             //this.RectImage = tile.RectImage;
         }
         #endregion
 
         #region properties
-        public long ImgId { get; set; }
+        public long ImgId
+        {
+            get { return (long)GetValue(ImgIdProperty); }
+            set { SetValue(ImgIdProperty, value); }
+        }
         public ImageSource TileSource
         {
             get { return (ImageSource)GetValue(TileSourceProperty); }
             set { SetValue(TileSourceProperty, value);
             }
         }
-        public double TileSize
+        public double TileWidth
         {
-            get { return (double)GetValue(TileSizeProperty); }
+            get { return (double)GetValue(TileWidthProperty); }
             set
             {
-                SetValue(TileSizeProperty, value);
+                SetValue(TileWidthProperty, value);
+            }
+        }
+        public double TileHeight
+        {
+            get { return (double)GetValue(TileHeightProperty); }
+            set
+            {
+                SetValue(TileHeightProperty, value);
             }
         }
         //public Int32Rect RectImage { get; set; }
@@ -61,10 +80,20 @@ namespace ggMapEditor.Views.Controls
             Tile tile = (Tile)sender;
             tile.tileImg.Source = (ImageSource)e.NewValue;
         }
-        private static void OnTileSizeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static void OnTileWidthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             Tile tile = (Tile)sender;
-            tile.tileImg.Height = tile.tileImg.Width = (double)e.NewValue;
+            tile.tileImg.Width = (double)e.NewValue;
+        }
+        private static void OnTileHeightChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            Tile tile = (Tile)sender;
+            tile.tileImg.Height = (double)e.NewValue;
+        }
+        private static void OnImgIdChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            Tile tile = (Tile)sender;
+            tile.tileImg.ToolTip = (long)e.NewValue;
         }
         #endregion
 
@@ -76,7 +105,7 @@ namespace ggMapEditor.Views.Controls
             {
                 DataObject data = new DataObject();
                 data.SetData(DataFormats.Bitmap, TileSource);
-                data.SetData("Double", this.TileSize);
+                data.SetData("ImgId", this.ImgId);
                 data.SetData("Object", this);
 
                 DragDrop.DoDragDrop(this, data, DragDropEffects.Copy);

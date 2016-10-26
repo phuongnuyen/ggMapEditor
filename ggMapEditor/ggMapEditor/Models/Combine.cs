@@ -15,8 +15,10 @@ namespace ggMapEditor.Models
 
         public Combine()
         {
-            tileMap = new TileMap();
-            tileset = new Tileset();
+            //tileMap = new TileMap();
+            //tileset = new Tileset();
+            tileMap = null;
+            tileset = null;
             folderName = "NewTileMap";
         }
     }

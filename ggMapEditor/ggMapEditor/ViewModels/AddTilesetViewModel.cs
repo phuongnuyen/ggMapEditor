@@ -37,10 +37,10 @@ namespace ggMapEditor.ViewModels
         #region Properties
         public string Name
         {
-            get { return tileset.name; }
+            get { return tileset.id; }
             set
             {
-                tileset.name = value;
+                tileset.id = value;
                 RaisePropertyChanged("Name");
             }
 
@@ -93,8 +93,9 @@ namespace ggMapEditor.ViewModels
         }
         void ButtonCancel(object parameter)
         {
-            //tileset.tileList.Clear();
-            //tileset = null;
+            tileset.tileList.Clear();
+            tileset = null;
+            GC.Collect();
             CloseWindow();
         }
         void BrowsFile(object parameter)
@@ -141,11 +142,11 @@ namespace ggMapEditor.ViewModels
             tileset.width = newImgSource.PixelWidth;
             tileset.height = newImgSource.PixelHeight;
 
-            string imgPath = folderPath + "\\" + tileset.name + ".png";
+            string imgPath = folderPath + "\\" + tileset.id + ".png";
             newImgSource.SaveImage(imgPath);
             tileset.imageUri = new Uri(imgPath, UriKind.RelativeOrAbsolute);
 
-            string jsonFilePath = folderPath + "\\" + tileset.name + ".json";
+            string jsonFilePath = folderPath + "\\" + tileset.id + ".json";
             string json = JsonConvert.SerializeObject(tileset);
             System.IO.File.WriteAllText(jsonFilePath, json);    
         }

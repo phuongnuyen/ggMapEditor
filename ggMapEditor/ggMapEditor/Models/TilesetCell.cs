@@ -9,9 +9,9 @@ namespace ggMapEditor.Models
     public class TilesetCell
     {
         private static long countId = 0;
-        public long id { get; set; }
-        public int x { get; set; }
-        public int y { get; set; }
+        public long id;
+        public int x;
+        public int y;
 
         public TilesetCell()
         {

@@ -12,17 +12,6 @@ namespace ggMapEditor.Views.Main
     {
         private Models.Combine combine;
         private Controls.MatrixGrid matrixGrid;
-        //public Models.TileMap TileMap
-        //{
-        //    get { return TileMap; }
-        //    set
-        //    {
-        //        TileMap = value;
-        //        RaisePropertyChanged("TileMap");
-        //        RaisePropertyChanged("Row");
-        //        RaisePropertyChanged("Column");
-        //    }
-        //}
 
         public int Row
         {
@@ -63,29 +52,17 @@ namespace ggMapEditor.Views.Main
                 MessageBox.Show("Please create TileMap before create tileset.");
                 return;
             }
-            //SaveFileDialog fileDialog = new SaveFileDialog();
-
-            //fileDialog.Filter = "Tile map files|*json";
-            //fileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            //fileDialog.FileName = "untitled.json";
-            //if (fileDialog.ShowDialog() == true)
-            //{
-            //    TileMap.tileset.tiles = matrixGrid.RetrieveTiles();
-            //    //string json = Json.ConvertJson.SaveFile(TileMap);
-            //    //System.IO.File.WriteAllText(fileDialog.FileName, json);
-
-            //}
 
             TileMap.listTile = matrixGrid.RetrieveTiles();
-            string json = Json.ConvertJson.SaveFile(combine);
+            Json.ConvertJson.SaveFile(combine);
+            status.Content = "Save map";
         }
 
         private void OpenTileMap_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Multiselect = true;
-            fileDialog.Filter = "Tile map files (*tmx)|*.tmx";
+            fileDialog.Filter = "Tile map files (*json)|*.json";
             fileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             //if (fileDialog.ShowDialog() == true)
@@ -102,7 +79,7 @@ namespace ggMapEditor.Views.Main
                 matrixGrid = new Controls.MatrixGrid();
                 matrixGrid.ColumnCount = TileMap.column;
                 matrixGrid.RowCount = TileMap.row;
-                matrixGrid.TileSize = TileMap.tileSize;
+                matrixGrid.TileSize = TileMap.leafWidth;
                 matrixGrid.InitGrid();
                 zoomBox.Children.Add(matrixGrid);
             }
@@ -118,7 +95,8 @@ namespace ggMapEditor.Views.Main
             Dialogs.AddTilesetDialog fileDialog = new Dialogs.AddTilesetDialog(combine.folderPath);
             fileDialog.ShowDialog();
             combine.tileset = fileDialog.GetTileset();
-            tilesetBox.SetTileset(combine.tileset);
+            if (combine.tileset != null && combine.tileset.imageUri != null)
+                tilesetBox.SetTileset(combine.tileset);
         }
     }
 }

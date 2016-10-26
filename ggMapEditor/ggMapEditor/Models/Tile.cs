@@ -4,29 +4,20 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Newtonsoft.Json;
 
 namespace ggMapEditor.Models
 {
     public class Tile
     {
-        public string Id { get; private set; }
-        public int imgId { get; set; }
+        public long tileId;
+        public string tilesetKey;
 
-        private Int32Rect bound;
-        public Int32Rect Bound
-        {
-            get { return bound; }
-            set
-            {
-                bound = value;
-                //Id = "{" + bound.X.ToString() + " ," + bound.Y.ToString() + "}";
-            }
-        }
-        //public Int32Rect RectImage { get; set; }
+        [JsonIgnore]
+        public Int32Rect rectPos;
 
         public Tile()
         {
-
         }
     }
 }

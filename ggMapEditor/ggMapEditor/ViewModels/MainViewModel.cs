@@ -13,42 +13,40 @@ namespace ggMapEditor.ViewModels
     class MainViewModel : Base.BaseViewModel
     {
         public Models.Combine combine { get; set; }
-        public int Width
+        public int MapWidth
         {
-            get { return combine.tileMap.width; }
+            get { return TileMap.mapWidth; }
             set
             {
-                combine.tileMap.width = value;
-                RaisePropertyChanged("Width");
+                TileMap.mapWidth = value;
+                RaisePropertyChanged("MapWidth");
             }
         }
-        public int Height
+        public int MapHeight
         {
-            get { return combine.tileMap.height; }
+            get { return TileMap.mapHeight; }
             set
             {
-                combine.tileMap.height = value;
-                RaisePropertyChanged("Heigth");
+                TileMap.mapHeight = value;
+                RaisePropertyChanged("MapHeigth");
             }
         }
         public int TileSize
         {
-            get { return combine.tileMap.tileSize; }
+            get { return TileMap.leafWidth; }
             set
             {
-                combine.tileMap.tileSize = value;
+                TileMap.leafWidth = value;
+                TileMap.leafHeight = value;
                 RaisePropertyChanged("TileSize");
             }
         }
-        //public ObservableCollection<Models.Tileset> Tilesets
-        //{
-        //    get { return combine.tilesets; }
-        //    set
-        //    {
-        //        combine.tilesets = value;
-        //        RaisePropertyChanged("Tilesets");
-        //    }
-        //}
+
+        public Models.TileMap TileMap
+        {
+            get { return combine.tileMap; }
+            set { combine.tileMap = value; }
+        }
 
         public Models.Tileset Tileset
         {

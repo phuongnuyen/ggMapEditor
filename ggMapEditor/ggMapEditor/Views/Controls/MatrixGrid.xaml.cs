@@ -90,10 +90,10 @@ namespace ggMapEditor.Views.Controls
             grid.Height = TileSize * RowCount;
 
             // Create collumns, rows
-            for (int i = 0; i < RowCount - 1; i++)
+            for (int i = 0; i < RowCount; i++)
                 grid.RowDefinitions.
                     Add(new RowDefinition(){ Height = new GridLength(TileSize)});
-            for (int i = 0; i < ColumnCount - 1; i++)
+            for (int i = 0; i < ColumnCount; i++)
                 grid.ColumnDefinitions.
                     Add(new ColumnDefinition() { Width = new GridLength(TileSize) });
 
@@ -120,9 +120,9 @@ namespace ggMapEditor.Views.Controls
                 {
                     Controls.Tile ctrTile = childrens.First() as Controls.Tile;
                     Models.Tile tile = new Models.Tile();
-                    //tile.RectImage = ctrTile.RectImage;
+                    tile.tileId = ctrTile.ImgId;
                     Point cellPosition = ctrTile.TransformToAncestor(grid).Transform(new Point(0, 0));
-                    tile.Bound = new Int32Rect((int)cellPosition.X, (int)cellPosition.Y, TileSize, TileSize);
+                    tile.rectPos = new Int32Rect((int)cellPosition.X, (int)cellPosition.Y, TileSize, TileSize);
                     listTile.Add(tile);
                 }
             }

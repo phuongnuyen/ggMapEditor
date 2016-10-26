@@ -7,9 +7,10 @@
         xmlns:helpers="clr-namespace:ggMapEditor.Helpers"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
-        Title="NewTileMap"
+        Title="New Tile Map"
         helpers:DialogCloser.DialogResult="{Binding CloseWindowFlag}">
     <Grid Margin="10">
         <StackPanel Orientation="Vertical"
@@ -47,8 +48,7 @@
 
             <TextBlock Height="10"/>
 
-            <TextBlock Name="MapPixelSize"
-                       Text="{Binding TileMapPixels}"/>
+            <TextBlock Text="{Binding MapPixels, Mode=OneWay}"/>
 
             <StackPanel Orientation="Vertical">
                 <DockPanel Margin="5">

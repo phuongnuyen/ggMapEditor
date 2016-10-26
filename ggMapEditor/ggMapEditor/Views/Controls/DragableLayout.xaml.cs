@@ -51,6 +51,7 @@ namespace ggMapEditor.Views.Controls
             {
                 Canvas panel = (Canvas)sender;
                 UIElement element = (UIElement)e.Data.GetData("Object");
+                long imgId = (long)e.Data.GetData("ImgId");
 
                 if (panel != null && element != null)
                 {
@@ -60,6 +61,7 @@ namespace ggMapEditor.Views.Controls
                         if (e.AllowedEffects.HasFlag(DragDropEffects.Copy))
                         {
                             Views.Controls.Tile tile = new Views.Controls.Tile(element as Controls.Tile);
+                            tile.ImgId = imgId;
                             panel.Name = "panel";
                             panel.Children.Add(tile);
                             listChild.Add(tile);

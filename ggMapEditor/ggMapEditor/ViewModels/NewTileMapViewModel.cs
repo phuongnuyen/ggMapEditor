@@ -12,7 +12,6 @@ namespace ggMapEditor.ViewModels
     class NewTileMapViewModel : Base.BaseViewModel
     {
         private Models.Combine combine;
-        private Models.TileMap tileMap;
 
         public RelayCommand OkCommand { get; set; }
         public RelayCommand CancelCommand { get; set; }
@@ -20,65 +19,70 @@ namespace ggMapEditor.ViewModels
 
         public NewTileMapViewModel()
         {
-            tileMap = new Models.TileMap();
             combine = new Models.Combine();
+            combine.tileMap = new Models.TileMap();
             combine.folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             OkCommand = new RelayCommand(OkButton_Click);
             CancelCommand = new RelayCommand(CancelButton_Click);
             BrowseCommand = new RelayCommand(BrowseButton_Click);
-            RowCount = 30;
-            ColumnCount = 30;
+            RowCount = 10;
+            ColumnCount = 10;
         }
 
         #region Properties
         public int RowCount
         {
-            get { return tileMap.row; }
+            get { return TileMap.row; }
             set
             {
-                tileMap.row = value;
-                tileMap.height = tileMap.row * tileMap.tileSize;
+                TileMap.row = value;
+                RaisePropertyChanged("MapPixels");
                 RaisePropertyChanged("RowCount");
-                RaisePropertyChanged("TileMapPixels");
             }
         }
         public int ColumnCount
         {
-            get { return tileMap.column; }
+            get { return TileMap.column; }
             set
             {
-                tileMap.column = value;
-                tileMap.width = tileMap.column * tileMap.tileSize;
+                TileMap.column = value;
+                RaisePropertyChanged("MapPixels");
                 RaisePropertyChanged("ColumnCount");
-                RaisePropertyChanged("TileMapPixels");
             }
         }
         public int TileSize
         {
-            get { return tileMap.tileSize; }
+            get { return TileMap.leafWidth; }
             set
             {
-                tileMap.tileSize = value;
-                tileMap.height = tileMap.row * tileMap.tileSize;
-                tileMap.width = tileMap.column * tileMap.tileSize;
+                TileMap.leafWidth = value;
+                TileMap.leafHeight = value;
                 RaisePropertyChanged("TileSize");
-                RaisePropertyChanged("TileMapPixels");
+                RaisePropertyChanged("MapPixels");
             }
         }
 
-        public string TileMapPixels
+        public string MapPixels
         {
             get
             {
-                return tileMap.width + " x " + tileMap.height + " pixels";
+                TileMap.mapHeight = TileMap.row * TileMap.leafWidth;
+                TileMap.mapWidth = TileMap.column * TileMap.leafHeight;
+                return TileMap.mapWidth + " x " + TileMap.mapHeight + " pixels";
             }
             set
             {
-                //tileMapPixels = tileMap.width + " x " + tileMap.height + " pixels";
-                RaisePropertyChanged("TileMapPixels");
+                RaisePropertyChanged("MapPixels");
             }
         }
-
+        private Models.TileMap TileMap
+        {
+            get { return combine.tileMap; }
+            set
+            {
+                combine.tileMap = value;
+            }
+        }
         public string FolderPath
         {
             get { return combine.folderPath; }
@@ -104,13 +108,21 @@ namespace ggMapEditor.ViewModels
         #region Commands
         private void OkButton_Click(object parameter)
         {
+            //Resize tilemap
+            int max = Math.Max(TileMap.row, TileMap.column);
+            double n = Math.Ceiling(Math.Log((double)max, 2.0));
+            //TileMap.column = TileMap.row = (int)Math.Pow(2.0, n);
+            TileMap.height = TileMap.width = (int)Math.Pow(2.0, n) * TileSize;
+
+            //Save folder contain tilemap
             combine.folderPath += "//" + FolderName;
             Json.ConvertJson.SaveFile(combine);
             this.CloseWindow();
         }
         private void CancelButton_Click(object parameter)
         {
-            //((IDisposable)tileMap).Dispose();
+            combine = null;
+            GC.Collect();
             this.CloseWindow();
         }
         private void BrowseButton_Click(object parameter)
